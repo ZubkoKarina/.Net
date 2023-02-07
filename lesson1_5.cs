@@ -11,14 +11,9 @@ namespace DemoApplication
     Console.Write("Input an year : ");
     year = Convert.ToInt32(Console.ReadLine());
  
-    if ((year % 400) == 0)
- Console.WriteLine("366 days in {0} ", year);
-    else if ((year % 100) == 0)
- Console.WriteLine("365 days in {0}", year);
-    else if ((year % 4) == 0)
- Console.WriteLine("366 days in {0}", year);
-    else
- Console.WriteLine("365 days in {0}", year);
+    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+       Console.WriteLine("366 days in {0}", year);}
+     else { Console.WriteLine("365 days in {0}", year);}  
   }
  }
 }
