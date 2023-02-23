@@ -1,5 +1,6 @@
 using System;
 
+
 class Airplane{
     private string model;
     private int? passengerCapacity;
