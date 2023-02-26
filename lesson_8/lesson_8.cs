@@ -1,6 +1,6 @@
 using System;
 
-class Animal {
+class Animal{
     public string Kind;
     public double Speed;
     public double Weight;
