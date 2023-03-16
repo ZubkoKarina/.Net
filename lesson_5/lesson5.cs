@@ -1,50 +1,37 @@
 using System;
 using System.IO;
 
-class Weapon
-{
+class Weapon{
     private int firingRange;
     private float caliber;
     private int bulletsInMagazine;
     private int maxMagazineSize;
-
-    public void Initialize(int range, float cal, int maxSize)
-    {
-        if (range <= 0 || cal <= 0 || maxSize <= 0)
-        {
+    public void Initialize(int range, float cal, int maxSize){
+        if (range <= 0 || cal <= 0 || maxSize <= 0){
             Console.WriteLine("Invalid parameters");
             return;
         }
-
         firingRange = range;
         caliber = cal;
         maxMagazineSize = maxSize;
         bulletsInMagazine = maxSize;
     }
-
-    public bool Shot()
-    {
-        if (bulletsInMagazine > 0)
-        {
+    public bool Shot(){
+        if (bulletsInMagazine > 0){
             bulletsInMagazine--;
             Console.WriteLine("Shot fired!");
             return true;
         }
-        else
-        {
+        else{
             Console.WriteLine("Empty magazine!");
             return false;
         }
     }
-
-    public void Recharge()
-    {
+    public void Recharge(){
         bulletsInMagazine = maxMagazineSize;
         Console.WriteLine("Reloaded!");
     }
-
-    public void Save()
-    {
+    public void Save(){
         string fileName = "weapon.txt";
         using (StreamWriter writer = new StreamWriter(fileName))
         {
@@ -55,12 +42,9 @@ class Weapon
         }
         Console.WriteLine("Weapon saved to file: " + fileName);
     }
-
-    public void Load()
-    {
+    public void Load(){
         string fileName = "weapon.txt";
-        using (StreamReader reader = new StreamReader(fileName))
-        {
+        using (StreamReader reader = new StreamReader(fileName)){
             firingRange = Convert.ToInt32(reader.ReadLine());
             caliber = Convert.ToSingle(reader.ReadLine());
             bulletsInMagazine = Convert.ToInt32(reader.ReadLine());
@@ -70,10 +54,8 @@ class Weapon
     }
 }
 
-class Program
-{
-    static void Main(string[] args)
-    {
+class Program{
+    static void Main(string[] args){
         Weapon gun = new Weapon();
         gun.Initialize(100, 0.9f, 10);
         gun.Shot();
