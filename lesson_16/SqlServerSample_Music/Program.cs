@@ -88,40 +88,15 @@ namespace MusicApp
             modelBuilder.Entity<PlaylistTrack>().HasKey(pt => new { pt.PlaylistId, pt.TrackId });
         }
     }
-
-    public class MusicContextInitializer : DropCreateDatabaseAlways<MusicContext>
-    {
-        protected override void Seed(MusicContext context)
-        {
-            var country = new Country { Name = "USA" };
-            context.Countries.Add(country);
-
-            var artist = new Artist { FirstName = "John", LastName = "Doe", Country = country };
-            context.Artists.Addcontext.Artists.Add(artist);
-
-            var album = new Album { Name = "Example Album", Year = 2023, Genre = "Rock", Artist = artist };
-            context.Albums.Add(album);
-
-            var track1 = new Track { Name = "Example Track 1", Duration = TimeSpan.FromSeconds(180), Album = album };
-            var track2 = new Track { Name = "Example Track 2", Duration = TimeSpan.FromSeconds(240), Album = album };
-            context.Tracks.AddRange(track1, track2);
-
-            var category = new Category { Name = "Favorites" };
-            context.Categories.Add(category);
-
-            context.SaveChanges();
-        }
-    }
-
     class Program
     {
         static void Main(string[] args)
         {
             using (var context = new MusicContext())
             {
-                // Инициализация базы данных с данными.
-                var initializer = new MusicContextInitializer();
-                initializer.InitializeDatabase(context);
+                // Применение миграций и инициализация базы данных с данными.
+                context.Database.Migrate();
+                Seed(context);
 
                 // Создание плейлиста.
                 var playlist = new Playlist { Name = "My Playlist", Category = context.Categories.Single(c => c.Name == "Favorites") };
@@ -133,7 +108,6 @@ namespace MusicApp
                 {
                     context.PlaylistTracks.Add(new PlaylistTrack { Playlist = playlist, Track = track });
                 }
-
                 context.SaveChanges();
 
                 // Вывод информации о плейлисте и треках.
@@ -144,5 +118,30 @@ namespace MusicApp
                 }
             }
         }
+
+        private static void Seed(MusicContext context)
+        {
+            if (!context.Countries.Any())
+            {
+                var country = new Country { Name = "USA" };
+                context.Countries.Add(country);
+
+                var artist = new Artist { FirstName = "John", LastName = "Doe", Country = country };
+                context.Artists.Add(artist);
+
+                var album = new Album { Name = "Example Album", Year = 2023, Genre = "Rock", Artist = artist };
+                context.Albums.Add(album);
+
+                var track1 = new Track { Name = "Example Track 1", Duration = TimeSpan.FromSeconds(180), Album = album };
+                var track2 = new Track { Name = "Example Track 2", Duration = TimeSpan.FromSeconds(240), Album = album };
+                context.Tracks.AddRange(track1, track2);
+
+                var category = new Category { Name = "Favorites" };
+                context.Categories.Add(category);
+
+                context.SaveChanges();
+            }
+        }
+
     }
 }
