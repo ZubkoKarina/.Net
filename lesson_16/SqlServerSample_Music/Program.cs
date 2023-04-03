@@ -77,6 +77,7 @@ namespace MusicApp
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<PlaylistTrack> PlaylistTracks { get; set; } // Add this line
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -88,6 +89,7 @@ namespace MusicApp
             modelBuilder.Entity<PlaylistTrack>().HasKey(pt => new { pt.PlaylistId, pt.TrackId });
         }
     }
+
     class Program
     {
         static void Main(string[] args)
