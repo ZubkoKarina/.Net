@@ -1,0 +1,5 @@
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Music/obj/Debug/net6.0/SqlServerSample_Music.csproj.AssemblyReference.cache
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Music/obj/Debug/net6.0/SqlServerSample_Music.GeneratedMSBuildEditorConfig.editorconfig
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Music/obj/Debug/net6.0/SqlServerSample_Music.AssemblyInfoInputs.cache
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Music/obj/Debug/net6.0/SqlServerSample_Music.AssemblyInfo.cs
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Music/obj/Debug/net6.0/SqlServerSample_Music.csproj.CoreCompileInputs.cache
