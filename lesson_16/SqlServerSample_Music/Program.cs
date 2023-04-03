@@ -70,7 +70,6 @@ namespace MusicApp{
             modelBuilder.Entity<PlaylistTrack>().HasKey(pt => new { pt.PlaylistId, pt.TrackId });
         }
     }
-
     class Program{
         static void Main(string[] args){
             using (var context = new MusicContext()){
@@ -89,8 +88,10 @@ namespace MusicApp{
                 }
             }
         }
-
         private static void Seed(MusicContext context){
+            if (!context.Categories.Any(c => c.Name == "new singls")){
+                context.Categories.Add(new Category { Name = "new singls" });
+            }
             if (!context.Countries.Any()){
                 var country = new Country { Name = "Ukraine" };
                 context.Countries.Add(country);
