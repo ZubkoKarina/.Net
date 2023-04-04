@@ -63,36 +63,51 @@ namespace MusicApp{
         public DbSet<Category> Categories { get; set; }
         public DbSet<PlaylistTrack> PlaylistTracks { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
-            optionsBuilder.UseSqlServer("Server=localhost;Database=MusicAppDb;User Id=sa;Password=Anton233@;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=MusicAppDb;User Id=sa;Password=Anton233@;Encrypt=False;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             modelBuilder.Entity<PlaylistTrack>().HasKey(pt => new { pt.PlaylistId, pt.TrackId });
         }
     }
-    class Program{
-        static void Main(string[] args){
-            using (var context = new MusicContext()){
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (var context = new MusicContext())
+            {
                 context.Database.Migrate();
                 Seed(context);
-                var playlist = new Playlist { Name = "new playlist", Category = context.Categories.Single(c => c.Name == "new singls") };
-                context.Playlists.Add(playlist);
-                var tracks = context.Tracks.ToList();
-                foreach (var track in tracks){
-                    context.PlaylistTracks.Add(new PlaylistTrack { Playlist = playlist, Track = track });
+                var playlist = new Playlist { Name = "new playlist", Category = context.Categories.SingleOrDefault(c => c.Name == "new singls") };
+                if (playlist.Category != null)
+                {
+                    context.Playlists.Add(playlist);
+                    var tracks = context.Tracks.ToList();
+                    foreach (var track in tracks)
+                    {
+                        context.PlaylistTracks.Add(new PlaylistTrack { Playlist = playlist, Track = track });
+                    }
+                    context.SaveChanges();
+                    Console.WriteLine($"Playlist: {playlist.Name} ({playlist.Category.Name})");
+                    foreach (var track in playlist.PlaylistTracks.Select(pt => pt.Track))
+                    {
+                        Console.WriteLine($"- {track.Name} ({track.Duration})");
+                    }
                 }
-                context.SaveChanges();
-                Console.WriteLine($"Playlist: {playlist.Name} ({playlist.Category.Name})");
-                foreach (var track in playlist.PlaylistTracks.Select(pt => pt.Track)){
-                    Console.WriteLine($"- {track.Name} ({track.Duration})");
+                else
+                {
+                    Console.WriteLine("Category 'new singls' not found.");
                 }
             }
         }
-        private static void Seed(MusicContext context){
-            if (!context.Categories.Any(c => c.Name == "new singls")){
+        private static void Seed(MusicContext context)
+        {
+            if (!context.Categories.Any(c => c.Name == "new singls"))
+            {
                 context.Categories.Add(new Category { Name = "new singls" });
             }
-            if (!context.Countries.Any()){
+            if (!context.Countries.Any())
+            {
                 var country = new Country { Name = "Ukraine" };
                 context.Countries.Add(country);
                 var artist = new Artist { FirstName = "Karina", LastName = "Zubko", Country = country };
@@ -102,8 +117,6 @@ namespace MusicApp{
                 var track1 = new Track { Name = "track 1", Duration = TimeSpan.FromSeconds(50), Album = album };
                 var track2 = new Track { Name = "track 2", Duration = TimeSpan.FromSeconds(50), Album = album };
                 context.Tracks.AddRange(track1, track2);
-                var category = new Category { Name = "new singls" };
-                context.Categories.Add(category);
                 context.SaveChanges();
             }
         }
