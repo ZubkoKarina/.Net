@@ -10,7 +10,7 @@ using MusicApp;
 namespace SqlServerSample_Music.Migrations
 {
     [DbContext(typeof(MusicContext))]
-    [Migration("20230403191345_InitialCreate")]
+    [Migration("20230404104559_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
