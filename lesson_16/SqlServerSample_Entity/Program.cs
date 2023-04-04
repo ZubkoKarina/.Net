@@ -105,6 +105,7 @@ namespace MusicApp{
             if (!context.Categories.Any(c => c.Name == "new singls"))
             {
                 context.Categories.Add(new Category { Name = "new singls" });
+                context.SaveChanges();
             }
             if (!context.Countries.Any())
             {
@@ -120,5 +121,6 @@ namespace MusicApp{
                 context.SaveChanges();
             }
         }
+
     }
 }
