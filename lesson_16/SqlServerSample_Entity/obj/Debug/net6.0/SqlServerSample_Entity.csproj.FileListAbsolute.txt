@@ -1,0 +1,5 @@
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Entity/obj/Debug/net6.0/SqlServerSample_Entity.csproj.AssemblyReference.cache
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Entity/obj/Debug/net6.0/SqlServerSample_Entity.GeneratedMSBuildEditorConfig.editorconfig
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Entity/obj/Debug/net6.0/SqlServerSample_Entity.AssemblyInfoInputs.cache
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Entity/obj/Debug/net6.0/SqlServerSample_Entity.AssemblyInfo.cs
+/home/karina/Документы/C# my rep./lesson_16/SqlServerSample_Entity/obj/Debug/net6.0/SqlServerSample_Entity.csproj.CoreCompileInputs.cache
