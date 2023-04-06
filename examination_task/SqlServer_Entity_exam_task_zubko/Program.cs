@@ -40,7 +40,7 @@ public class RealEstateContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=localhost;Database=MyDatabase;User Id=sa;Password=Anton233@;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=localhost;Database=MyDatabase;User Id=sa;Password='Anton233@';TrustServerCertificate=True");
     }
 
 }
