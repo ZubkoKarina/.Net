@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+//колекції об'єктів, XML-документи та ін.
+using System.Linq;          
 using Microsoft.EntityFrameworkCore;
 
 public abstract class Property
@@ -9,7 +10,7 @@ public abstract class Property
     public string District { get; set; }
     public double Area { get; set; }
     public int Rooms { get; set; }
-    public int Floor { get; set; }             
+    public int Floor { get; set; }
     public double Price { get; set; }
     public string Address { get; set; }
     public abstract string GetDescription();
@@ -27,7 +28,7 @@ public class ClientRequest
 {
     public int Id { get; set; }
     public string FullName { get; set; }
-    public string RequestType { get; set; } // обмін, купівля або продаж
+    public string RequestType { get; set; }     // обмін, купівля або продаж
     public string Address { get; set; }
     public string PhoneNumber { get; set; }
     public DateTime RequestDate { get; set; }
@@ -48,9 +49,9 @@ public class RealEstateContext : DbContext
 
 public interface IPropertyService
 {
-    void AddProperty(Apartment property);
-    void RemoveProperty(int propertyId);
-    IEnumerable<Apartment> GetAllProperties();
+    void AddProperty(Apartment property);                    //додати нові апартаменти
+    void RemoveProperty(int propertyId);                     //видалити апартаменти
+    IEnumerable<Apartment> GetAllProperties();               //вивести всі
     IEnumerable<Apartment> GetFilteredProperties(Func<Apartment, bool> filter);
     void UpdateProperty(int propertyId, Apartment newProperty);
 }
@@ -69,7 +70,7 @@ public class PropertyService : IPropertyService
     private readonly RealEstateContext _context;
 
     public PropertyService(RealEstateContext context)
-    {
+    {   
         _context = context;
     }
 
@@ -114,7 +115,6 @@ public class PropertyService : IPropertyService
         }
     }
 }
-
 
 public class ClientService : IClientService
 {
@@ -166,14 +166,14 @@ public class Program
         IClientService clientService = new ClientService(dbContext);
 
         // Заповнення бази даних прикладами нерухомості та заявок клієнтів
-        propertyService.AddProperty(new Apartment { Id = 1, District = "Ковельська", Area = 10, Rooms = 2, Floor = 9, Price = 1500000, Address = "вул. Ковельська, 12" });
-        propertyService.AddProperty(new Apartment { Id = 2, District = "Володимира Великого", Area = 15, Rooms = 3, Floor = 7, Price = 2000000, Address = "вул. Володимира Великого, 1" });
-        propertyService.AddProperty(new Apartment { Id = 3, District = "Волі", Area = 20, Rooms = 4, Floor = 3, Price = 800000, Address = "вул. Волі, 10" });
+        propertyService.AddProperty(new Apartment {District = "Ковельська", Area = 10, Rooms = 2, Floor = 9, Price = 1500000, Address = "вул. Ковельська, 12" });
+        propertyService.AddProperty(new Apartment {District = "Володимира Великого", Area = 15, Rooms = 3, Floor = 7, Price = 2000000, Address = "вул. Володимира Великого, 1" });
+        propertyService.AddProperty(new Apartment {District = "Волі", Area = 20, Rooms = 4, Floor = 3, Price = 800000, Address = "вул. Волі, 10" });
 
 
-        clientService.AddClientRequest(new ClientRequest { Id = 1, FullName = "Каріна Зубко", RequestType = "купівля", Address = "вул. Ковельська, 12", PhoneNumber = "0661234567", RequestDate = DateTime.Now });
-        clientService.AddClientRequest(new ClientRequest { Id = 2, FullName = "Андрій Зубко", RequestType = "обмін", Address = "вул. Володимира Великого, 1", PhoneNumber = "0671234567", RequestDate = DateTime.Now });
-        clientService.AddClientRequest(new ClientRequest { Id = 3, FullName = "Аліна Зубко", RequestType = "продаж", Address = "вул. Волі, 10", PhoneNumber = "0681234567", RequestDate = DateTime.Now });
+        clientService.AddClientRequest(new ClientRequest {FullName = "Каріна Зубко", RequestType = "купівля", Address = "вул. Ковельська, 12", PhoneNumber = "0661234567", RequestDate = DateTime.Now });
+        clientService.AddClientRequest(new ClientRequest {FullName = "Андрій Зубко", RequestType = "обмін", Address = "вул. Володимира Великого, 1", PhoneNumber = "0671234567", RequestDate = DateTime.Now });
+        clientService.AddClientRequest(new ClientRequest {FullName = "Аліна Зубко", RequestType = "продаж", Address = "вул. Волі, 10", PhoneNumber = "0681234567", RequestDate = DateTime.Now });
 
         // Цикл для обробки вводу користувача
         while (true)

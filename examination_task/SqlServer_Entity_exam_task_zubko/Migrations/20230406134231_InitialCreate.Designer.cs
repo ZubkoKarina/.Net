@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SqlServer_Entity_exam_task_zubko.Migrations
 {
     [DbContext(typeof(RealEstateContext))]
-    [Migration("20230406132232_InitialCreate")]
+    [Migration("20230406134231_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

@@ -102,13 +102,13 @@ public class Program{
         IClientService clientService = new ClientService();
 
         // Заповнення бази даних прикладами нерухомості та заявок клієнтів
-        propertyService.AddProperty(new Apartment { Id = 1, District = "Подільський", Area = 70, Rooms = 2, Floor = 5, Price = 70000, Address = "вул. Подільська, 5" });
-        propertyService.AddProperty(new Apartment { Id = 2, District = "Голосіївський", Area = 90, Rooms = 3, Floor = 7, Price = 90000, Address = "вул. Голосіївська, 12" });
-        propertyService.AddProperty(new Apartment { Id = 3, District = "Печерський", Area = 120, Rooms = 4, Floor = 3, Price = 120000, Address = "вул. Печерська, 22" });
+        propertyService.AddProperty(new Apartment { Id = 1, District = "Ковельська", Area = 10, Rooms = 2, Floor = 9, Price = 1500000, Address = "вул. Ковельська, 12" });
+        propertyService.AddProperty(new Apartment { Id = 2, District = "Володимира Великого", Area = 15, Rooms = 3, Floor = 7, Price = 2000000, Address = "вул. Володимира Великого, 1" });
+        propertyService.AddProperty(new Apartment { Id = 3, District = "Волі", Area = 20, Rooms = 4, Floor = 3, Price = 800000, Address = "вул. Волі, 10" });
 
-        clientService.AddClientRequest(new ClientRequest { Id = 1, FullName = "Іван Іванов", RequestType = "купівля", Address = "вул. Подільська, 5", PhoneNumber = "0661234567", RequestDate = DateTime.Now });
-        clientService.AddClientRequest(new ClientRequest { Id = 2, FullName = "Петро Петров", RequestType = "обмін", Address = "вул. Голосіївська, 12", PhoneNumber = "0671234567", RequestDate = DateTime.Now });
-        clientService.AddClientRequest(new ClientRequest { Id = 3, FullName = "Сергій Сергієнко", RequestType = "продаж", Address = "вул. Печерська, 22", PhoneNumber = "0681234567", RequestDate = DateTime.Now });
+        clientService.AddClientRequest(new ClientRequest { Id = 1, FullName = "Каріна Зубко", RequestType = "купівля", Address = "вул. Ковельська, 12", PhoneNumber = "0661234567", RequestDate = DateTime.Now });
+        clientService.AddClientRequest(new ClientRequest { Id = 2, FullName = "Андрій Зубко", RequestType = "обмін", Address = "вул. Володимира Великого, 1", PhoneNumber = "0671234567", RequestDate = DateTime.Now });
+        clientService.AddClientRequest(new ClientRequest { Id = 3, FullName = "Аліна Зубко", RequestType = "продаж", Address = "вул. Волі, 10", PhoneNumber = "0681234567", RequestDate = DateTime.Now });
 
         // Цикл для обробки вводу користувача
         while (true){
