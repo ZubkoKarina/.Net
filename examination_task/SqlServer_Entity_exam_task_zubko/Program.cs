@@ -9,7 +9,7 @@ public abstract class Property
     public string District { get; set; }
     public double Area { get; set; }
     public int Rooms { get; set; }
-    public int Floor { get; set; }
+    public int Floor { get; set; }             
     public double Price { get; set; }
     public string Address { get; set; }
     public abstract string GetDescription();
@@ -35,7 +35,7 @@ public class ClientRequest
 
 public class RealEstateContext : DbContext
 {
-    public DbSet<Property> Properties { get; set; }
+    public DbSet<Apartment> Apartments { get; set; }
     public DbSet<ClientRequest> ClientRequests { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -44,13 +44,14 @@ public class RealEstateContext : DbContext
     }
 }
 
+
 public interface IPropertyService
 {
-    void AddProperty(Property property);
+    void AddProperty(Apartment property);
     void RemoveProperty(int propertyId);
-    IEnumerable<Property> GetAllProperties();
-    IEnumerable<Property> GetFilteredProperties(Func<Property, bool> filter);
-    void UpdateProperty(int propertyId, Property newProperty);
+    IEnumerable<Apartment> GetAllProperties();
+    IEnumerable<Apartment> GetFilteredProperties(Func<Apartment, bool> filter);
+    void UpdateProperty(int propertyId, Apartment newProperty);
 }
 
 public interface IClientService
@@ -71,35 +72,35 @@ public class PropertyService : IPropertyService
         _context = context;
     }
 
-    public void AddProperty(Property property)
+    public void AddProperty(Apartment property)
     {
-        _context.Properties.Add(property);
+        _context.Apartments.Add(property);
         _context.SaveChanges();
     }
 
     public void RemoveProperty(int propertyId)
     {
-        var property = _context.Properties.FirstOrDefault(p => p.Id == propertyId);
+        var property = _context.Apartments.FirstOrDefault(p => p.Id == propertyId);
         if (property != null)
         {
-            _context.Properties.Remove(property);
+            _context.Apartments.Remove(property);
             _context.SaveChanges();
         }
     }
 
-    public IEnumerable<Property> GetAllProperties()
+    public IEnumerable<Apartment> GetAllProperties()
     {
-        return _context.Properties.ToList();
+        return _context.Apartments.ToList();
     }
 
-    public IEnumerable<Property> GetFilteredProperties(Func<Property, bool> filter)
+    public IEnumerable<Apartment> GetFilteredProperties(Func<Apartment, bool> filter)
     {
-        return _context.Properties.Where(filter).ToList();
+        return _context.Apartments.Where(filter).ToList();
     }
 
-    public void UpdateProperty(int propertyId, Property newProperty)
+    public void UpdateProperty(int propertyId, Apartment newProperty)
     {
-        var property = _context.Properties.FirstOrDefault(p => p.Id == propertyId);
+        var property = _context.Apartments.FirstOrDefault(p => p.Id == propertyId);
         if (property != null)
         {
             property.District = newProperty.District;
@@ -112,6 +113,7 @@ public class PropertyService : IPropertyService
         }
     }
 }
+
 
 public class ClientService : IClientService
 {
@@ -163,13 +165,14 @@ public class Program
         IClientService clientService = new ClientService(dbContext);
 
         // Заповнення бази даних прикладами нерухомості та заявок клієнтів
-        propertyService.AddProperty(new Apartment { Id = 1, District = "Подільський", Area = 70, Rooms = 2, Floor = 5, Price = 70000, Address = "вул. Подільська, 5" });
-        propertyService.AddProperty(new Apartment { Id = 2, District = "Голосіївський", Area = 90, Rooms = 3, Floor = 7, Price = 90000, Address = "вул. Голосіївська, 12" });
-        propertyService.AddProperty(new Apartment { Id = 3, District = "Печерський", Area = 120, Rooms = 4, Floor = 3, Price = 120000, Address = "вул. Печерська, 22" });
+        propertyService.AddProperty(new Apartment { Id = 1, District = "Ковельська", Area = 10, Rooms = 2, Floor = 9, Price = 1500000, Address = "вул. Ковельська, 12" });
+        propertyService.AddProperty(new Apartment { Id = 2, District = "Володимира Великого", Area = 15, Rooms = 3, Floor = 7, Price = 2000000, Address = "вул. Володимира Великого, 1" });
+        propertyService.AddProperty(new Apartment { Id = 3, District = "Волі", Area = 20, Rooms = 4, Floor = 3, Price = 800000, Address = "вул. Волі, 10" });
 
-        clientService.AddClientRequest(new ClientRequest { Id = 1, FullName = "Іван Іванов", RequestType = "купівля", Address = "вул. Подільська, 5", PhoneNumber = "0661234567", RequestDate = DateTime.Now });
-        clientService.AddClientRequest(new ClientRequest { Id = 2, FullName = "Петро Петров", RequestType = "обмін", Address = "вул. Голосіївська, 12", PhoneNumber = "0671234567", RequestDate = DateTime.Now });
-        clientService.AddClientRequest(new ClientRequest { Id = 3, FullName = "Сергій Сергієнко", RequestType = "продаж", Address = "вул. Печерська, 22", PhoneNumber = "0681234567", RequestDate = DateTime.Now });
+
+        clientService.AddClientRequest(new ClientRequest { Id = 1, FullName = "Каріна Зубко", RequestType = "купівля", Address = "вул. Ковельська, 12", PhoneNumber = "0661234567", RequestDate = DateTime.Now });
+        clientService.AddClientRequest(new ClientRequest { Id = 2, FullName = "Андрій Зубко", RequestType = "обмін", Address = "вул. Володимира Великого, 1", PhoneNumber = "0671234567", RequestDate = DateTime.Now });
+        clientService.AddClientRequest(new ClientRequest { Id = 3, FullName = "Аліна Зубко", RequestType = "продаж", Address = "вул. Волі, 10", PhoneNumber = "0681234567", RequestDate = DateTime.Now });
 
         // Цикл для обробки вводу користувача
         while (true)
